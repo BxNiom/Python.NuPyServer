@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "nupyserver"
+version = "0.1.0"
+description = ""
+authors = ["BxNiom <bxniom@protonmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = {version = "^0.68.1", extras = ["all"]}
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
