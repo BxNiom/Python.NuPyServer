@@ -24,7 +24,6 @@ class CheckOut:
         self._db = db
         self._config = config
         self._log = logging.getLogger("CheckOut")
-        pass
 
     def run(self):
         global _CHECKOUT_RUNNING

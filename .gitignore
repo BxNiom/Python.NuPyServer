@@ -190,3 +190,4 @@ fabric.properties
 *.iml
 out
 gen
+/test.py

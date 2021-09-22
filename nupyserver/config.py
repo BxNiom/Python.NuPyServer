@@ -1,6 +1,7 @@
 import logging
 import pathlib
 from configparser import ConfigParser
+from os import getenv
 from os.path import join, exists
 
 
@@ -8,10 +9,10 @@ class Config(ConfigParser):
     def __init__(self):
         log = logging.getLogger("Config")
         # TODO change
-        dev = True
+        dev = getenv("NUPYSERVER_DEV") == "1"
 
         ConfigParser.__init__(self)
-        configFilePath = ("./venv" if dev else "") + "/etc/nupyserver.conf"
+        configFilePath = "/etc/nupyserver.conf"
 
         # load config file
         self.read(configFilePath)
