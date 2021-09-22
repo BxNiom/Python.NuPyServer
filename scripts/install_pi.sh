@@ -9,8 +9,9 @@ echo "Install dependencies..."
 apt install build-essential git -y > /dev/null 2>&1
 pip3 install poetry > /dev/null 2>&1
 
-echo "Cloning server..."
+echo "Install NuPyServer..."
 git clone https://github.com/BxNiom/Python.NuPyServer.git /opt/nupyserver > /dev/null 2>&1
+(cd /opt/nupyserver && poetry install --no-dev) > /dev/null 2>&1
 
 echo "Create server storage..."
 mkdir /srv/nupyserver > /dev/null 2>&1
@@ -36,7 +37,7 @@ echo "[protocols] = " >> /etc/nupyserver.conf
 echo "version2 = no " >> /etc/nupyserver.conf
 echo "version3 = yes" >> /etc/nupyserver.conf
 
-echo "Create executable..."
+echo "Prepare scripts..."
 ln -s /opt/nupyserver/run.sh /usr/bin/nupyserver > /dev/null 2>&1
 chmod +x /usr/bin/nupyserver > /dev/null 2>&1
 
