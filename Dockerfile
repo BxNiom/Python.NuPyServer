@@ -1,9 +1,9 @@
 # NuPyServer Docker
 FROM python:3.7-slim-buster
 RUN apt update \
-    && apt install build-essential libssl-dev python3-dev libffi-dev cargo -y \
+    && apt install git python3-cryptopraphy python3-uvicorn uvicorn -y \
     && pip install -U pip  \
-    && pip install poetry
+    && pip install fastapi
 
 # Create server directories
 RUN mkdir -p /nupyserver/log \
@@ -13,13 +13,10 @@ RUN mkdir -p /nupyserver/log \
 
 # Install server
 RUN mkdir /app
-COPY ./pyproject.toml /app
 COPY ./run.sh /app
 COPY ./nupyserver.example.conf /etc/nupyserver.conf
 
 WORKDIR /app
-RUN poetry install --no-dev
 COPY ./nupyserver /app/nupyserver
-RUN poetry install --no-dev
 EXPOSE 8080/tcp
 ENTRYPOINT /bin/sh /app/run.sh
