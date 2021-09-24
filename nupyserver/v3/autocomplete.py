@@ -3,10 +3,10 @@ from nupyserver.v3.services import BaseService
 
 class AutoCompleteService(BaseService):
     def register_services(self):
-        self.services.add_service("/v3/auto", "SearchAutoCompleteService")
-        self.services.add_service("/v3/auto", "SearchAutoCompleteService/3.0.0-beta")
-        self.services.add_service("/v3/auto", "SearchAutoCompleteService/3.0.0-RC")
-        self.services.add_service("/v3/auto", "SearchAutoCompleteService/3.5.0")
+        self.services.add_service(f"{self.config.get('url')}/v3/auto", "SearchAutoCompleteService")
+        self.services.add_service(f"{self.config.get('url')}/v3/auto", "SearchAutoCompleteService/3.0.0-beta")
+        self.services.add_service(f"{self.config.get('url')}/v3/auto", "SearchAutoCompleteService/3.0.0-RC")
+        self.services.add_service(f"{self.config.get('url')}/v3/auto", "SearchAutoCompleteService/3.5.0")
 
     def register_routes(self):
         @self.server.get("/v3/auto")

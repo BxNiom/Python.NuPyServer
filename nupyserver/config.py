@@ -15,12 +15,16 @@ class Config(object):
         self._set("dev", str(getenv("NPS_DEV", "0") == "1"))
         self._set("storage", getenv("NPS_STORAGE", "/nupyserver"))
         self._set("checkout_min", getenv("NPS_CHECKOUT", "5"))
+        self._set("ip", getenv("NPS_IP", "127.0.0.1"))
 
         # add app internal config values
         self._set("db", join(self.get("storage"), "nupyserver.db"))
         self._set("checkout", join(self.get("storage"), "checkout"))
         self._set("packages", join(self.get("storage"), "packages"))
         self._set("log", join(self.get("storage"), "log"))
+
+        use_ssl = getenv("NPS_SSL_KEY", "") is not "" and getenv("NPS_SSL_CERT", "") is not ""
+        self._set("url", "http{ssl}://{ip}:5000".format(ssl="s" if use_ssl else "", ip=self.get("ip")))
 
         # Check directories
         if not exists(self.get("log")):

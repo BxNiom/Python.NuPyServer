@@ -12,6 +12,7 @@ COPY nupyserver /app/nupyserver
 
 ENV NPS_STORAGE=/nupyserver
 ENV NPS_DEV=0
+ENV NPS_IP=127.0.0.1
 
 WORKDIR /app
 EXPOSE 5000/tcp

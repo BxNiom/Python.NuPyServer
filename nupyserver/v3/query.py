@@ -6,10 +6,10 @@ class QueryService(BaseService):
                "pkg_info_url, pkg_info_summary, pkg_info_title"
 
     def register_services(self):
-        self.services.add_service("/v3/query", "SearchQueryService")
-        self.services.add_service("/v3/query", "SearchQueryService/3.0.0-beta")
-        self.services.add_service("/v3/query", "SearchQueryService/3.0.0-RC")
-        self.services.add_service("/v3/query", "SearchQueryService/3.5.0")
+        self.services.add_service(f"{self.config.get('url')}/v3/query", "SearchQueryService")
+        self.services.add_service(f"{self.config.get('url')}/v3/query", "SearchQueryService/3.0.0-beta")
+        self.services.add_service(f"{self.config.get('url')}/v3/query", "SearchQueryService/3.0.0-RC")
+        self.services.add_service(f"{self.config.get('url')}/v3/query", "SearchQueryService/3.5.0")
 
     def register_routes(self):
         @self.server.get("/v3/query")
