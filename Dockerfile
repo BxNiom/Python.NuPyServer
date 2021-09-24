@@ -3,7 +3,7 @@ ARG ARCH=arm32v7
 FROM ${ARCH}/python:3.7-slim-buster
 RUN apt update \
     && apt install git python3-cryptography python3-uvicorn -y \
-    && pip3 install fastapi uvicorn
+    && pip3 install fastapi uvicorn aiofiles
 
 # Install server
 RUN mkdir -p /app/log
