@@ -17,11 +17,11 @@ host=$(get_config "host")
 port=$(get_config "port")
 ssl_cert=$(get_config "ssl_cert")
 ssl_key=$(get_config "ssl_key")
-cmd="uvicorn nupyserver.server:app --host $host --port $port"
+cmd="python3 -m uvicorn nupyserver.server:app --host $host --port $port"
 
 if [ ! -z $ssl_cert ] && [ ! -z $ssl_key ]
 then
     cmd+=" --ssl-keyfile=$ssl_key --ssl-certfile=$ssl_cert"
 fi
 
-$cmd
+(cd /app && $cmd)

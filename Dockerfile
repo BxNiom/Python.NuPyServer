@@ -1,9 +1,8 @@
 # NuPyServer Docker
 FROM arm32v7/python:3.7-slim-buster
 RUN apt update \
-    && apt install git python3-cryptography python3-uvicorn uvicorn -y \
-    && pip install -U pip  \
-    && pip install fastapi
+    && apt install git python3-cryptography python3-uvicorn -y \
+    && pip3 install fastapi uvicorn
 
 # Create server directories
 RUN mkdir -p /nupyserver/log \
@@ -19,4 +18,4 @@ COPY ./nupyserver.example.conf /etc/nupyserver.conf
 
 WORKDIR /app
 EXPOSE 8080/tcp
-ENTRYPOINT /bin/sh /app/run.sh
+ENTRYPOINT /app/run.sh
