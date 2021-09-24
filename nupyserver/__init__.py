@@ -1,4 +1,4 @@
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 import logging.config
 
@@ -23,7 +23,7 @@ LOG_CONFIG = {
             'level': 'INFO',
             'formatter': 'long',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/nupyserver/log/nupyserver.log',
+            'filename': './log/nupyserver.log',
             'maxBytes': 20000,
             'backupCount': 5
         }

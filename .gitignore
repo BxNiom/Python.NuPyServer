@@ -191,3 +191,4 @@ fabric.properties
 out
 gen
 /test.py
+/nupyserver.env

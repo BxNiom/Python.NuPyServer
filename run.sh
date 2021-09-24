@@ -9,19 +9,22 @@ echo "                             |___/"
 echo "                                                                     by BxNiom"
 echo ""
 
-get_config() { 
-    echo $(awk -F "=" "/^$1/ {print \$2}" /etc/nupyserver.conf);
-}
+# Check directories
 
-host=$(get_config "host")
-port=$(get_config "port")
-ssl_cert=$(get_config "ssl_cert")
-ssl_key=$(get_config "ssl_key")
-cmd="python3 -m uvicorn nupyserver.server:app --host $host --port $port"
-
-if [ ! -z $ssl_cert ] && [ ! -z $ssl_key ]
+if [ ! -d "${NPS_STORAGE}" ]
 then
-    cmd+=" --ssl-keyfile=$ssl_key --ssl-certfile=$ssl_cert"
+  echo "Create storage directories..."
+  mkdir -p "${NPS_STORAGE}/log"
+  mkdir -p "${NPS_STORAGE}/checkout"
+  mkdir -p "${NPS_STORAGE}/packages"
+  chmod -R 777 "${NPS_STORAGE}"
+fi
+
+cmd="python3 -m uvicorn nupyserver.server:app --host 0.0.0.0 --port 5000"
+
+if [ ! -z $NPS_SSL_CERT ] && [ ! -z $NPS_SSL_KEY ]
+then
+    cmd+=" --ssl-keyfile=$NPS_SSL_KEY --ssl-certfile=$NPS_SSL_CERT"
 fi
 
 (cd /app && $cmd)

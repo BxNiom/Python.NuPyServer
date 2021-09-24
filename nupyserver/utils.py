@@ -1,6 +1,5 @@
 import codecs
 import hashlib
-from datetime import datetime
 from os.path import exists, isfile
 from typing import IO
 

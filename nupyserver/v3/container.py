@@ -41,10 +41,10 @@ class ContainerService(BaseService):
         return {"versions": versions}
 
     def on_get_nupkg(self, pkgid: str, pkgver: str):
-        filePath = join(self.config.get("_app", "packages"), pkgid, f"{pkgid}.{pkgver}.nupkg")
+        filePath = join(self.config.get("packages"), pkgid, f"{pkgid}.{pkgver}.nupkg")
         return FileResponse(filePath)
 
     def on_get_nuspec(self, pkgid: str, pkgver: str):
-        filePath = join(self.config.get("_app", "packages"), pkgid, f"{pkgid}.{pkgver}.nuspec")
+        filePath = join(self.config.get("packages"), pkgid, f"{pkgid}.{pkgver}.nuspec")
         with open(filePath, "r") as fi:
             return Response(fi.read(), media_type="application/xml")

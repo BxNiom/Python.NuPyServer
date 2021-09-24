@@ -1,56 +1,69 @@
 import logging
 import pathlib
-from configparser import ConfigParser
 from os import getenv
 from os.path import join, exists
 
 
-class Config(ConfigParser):
+class Config(object):
     def __init__(self):
+        self._dict = {}
+        self._boolValues = {"yes": True, "true": True, "enable": True, "no": False, "false": False, "disable": True}
+
         log = logging.getLogger("Config")
-        # TODO change
-        dev = getenv("NUPYSERVER_DEV") == "1"
 
-        ConfigParser.__init__(self)
-        configFilePath = "/etc/nupyserver.conf"
-
-        # load config file
-        self.read(configFilePath)
+        # load config from environment
+        self._set("dev", str(getenv("NPS_DEV", "0") == "1"))
+        self._set("storage", getenv("NPS_STORAGE", "/nupyserver"))
+        self._set("checkout_min", getenv("NPS_CHECKOUT", "5"))
 
         # add app internal config values
-        self.add_section("_app")
-        self.set("_app", "dev", str(dev))
-        self.set("_app", "db", join(self.get("server", "storage"), "nupyserver.db"))
-        self.set("_app", "checkout", join(self.get("server", "storage"), "checkout"))
-        self.set("_app", "packages", join(self.get("server", "storage"), "packages"))
-        self.set("_app", "log", join(self.get("server", "storage"), "log"))
-        self.set("_app", "ssl", str(self.has_option("server", "ssl_cert") and self.has_option("server", "ssl_key")))
-        self.set("_app", "url",
-                 f"http{'s' if self.getboolean('_app', 'ssl') else ''}://{self.get('server', 'host')}:" + \
-                 f"{self.get('server', 'port')}")
+        self._set("db", join(self.get("storage"), "nupyserver.db"))
+        self._set("checkout", join(self.get("storage"), "checkout"))
+        self._set("packages", join(self.get("storage"), "packages"))
+        self._set("log", join(self.get("storage"), "log"))
 
         # Check directories
-        if not exists(self.get("_app", "log")):
+        if not exists(self.get("log")):
             log.info("Log directory not found. Try to create...")
-            pathlib.Path(self.get("_app", "log")).mkdir(parents=True, exist_ok=True)
+            pathlib.Path(self.get("log")).mkdir(parents=True, exist_ok=True)
 
-        if not exists(self.get("_app", "checkout")):
+        if not exists(self.get("checkout")):
             log.info("Checkout directory not found. Try to create...")
-            pathlib.Path(self.get("_app", "checkout")).mkdir(parents=True, exist_ok=True)
+            pathlib.Path(self.get("checkout")).mkdir(parents=True, exist_ok=True)
 
-        if not exists(self.get("_app", "packages")):
+        if not exists(self.get("packages")):
             log.info("Package directory not found. Try to create...")
-            pathlib.Path(self.get("_app", "packages")).mkdir(parents=True, exist_ok=True)
+            pathlib.Path(self.get("packages")).mkdir(parents=True, exist_ok=True)
 
-        if dev:
+        if self.getboolean("dev"):
             self.print_debug()
 
+    def _set(self, name: str, value):
+        self._dict[name] = str(value)
+
+    def get(self, name: str, fallback=None):
+        return self._dict[name] if name in self._dict else fallback
+
+    def getint(self, name: str, fallback=None):
+        strVal = self.get(name, fallback=None)
+        if strVal:
+            try:
+                return int(strVal)
+            except:
+                pass
+
+        return fallback
+
+    def getboolean(self, name: str, fallback: bool = None):
+        if name in self._dict:
+            if self._dict[name] in self._boolValues:
+                return self._boolValues[self._dict[name]]
+
+        return fallback
+
     def print_debug(self):
-        log = logging.getLogger("Config")
-        log.debug("Config {")
-        for section in self.sections():
-            log.debug(f"  [{section}]")
-            options = self.options(section)
-            for item in options:
-                log.debug(f"    {item} = {self.get(section, item)}")
-        log.debug("}")
+        print("Config {")
+        for name in self._dict:
+            print(f"  {name} = {self._dict[name]}")
+
+        print("}")

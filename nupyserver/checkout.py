@@ -34,10 +34,10 @@ class CheckOut:
         self._log.info("Run checkout...")
 
         pkgInfoList = []
-        for f in listdir(self._config.get("_app", "checkout")):
+        for f in listdir(self._config.get("checkout")):
             if f.endswith(".nupkg"):
                 self._log.debug(f"Check {f}")
-                pkgInfo = self._read_nupkg(join(self._config.get("_app", "checkout"), f))
+                pkgInfo = self._read_nupkg(join(self._config.get("checkout"), f))
                 if pkgInfo:
                     pkgInfoList.append(pkgInfo)
 
@@ -92,7 +92,7 @@ class CheckOut:
 
         # Next we try to create a storage directory and save needed files
         try:
-            pkgPath = join(self._config.get("_app", "packages"), pkgInfo[2].lower())
+            pkgPath = join(self._config.get("packages"), pkgInfo[2].lower())
             if not exists(pkgPath):
                 mkdir(pkgPath)
 

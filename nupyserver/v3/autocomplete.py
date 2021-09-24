@@ -39,6 +39,6 @@ class AutoCompleteService(BaseService):
         }
 
     def on_auto_versions(self, pkgid: str, q: str, skip: int, take: int, prerelease: bool):
-        return { "data": self.db.list_column("tbl_packages", "pkg_info_version",
-                                             where=f"LOWER(pkg_info_id)='{pkgid}'" +
-                                             ("" if prerelease else " AND pkg_info_version NOT LIKE '%-%'"))}
+        return {"data": self.db.list_column("tbl_packages", "pkg_info_version",
+                                            where=f"LOWER(pkg_info_id)='{pkgid}'" +
+                                                  ("" if prerelease else " AND pkg_info_version NOT LIKE '%-%'"))}

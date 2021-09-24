@@ -3,9 +3,9 @@ __version__ = "0.1.0"
 import logging
 
 from nupyserver.v3.autocomplete import AutoCompleteService
+from nupyserver.v3.container import ContainerService
 from nupyserver.v3.query import QueryService
 from nupyserver.v3.services import Services
-from nupyserver.v3.container import ContainerService
 
 
 def init(server):

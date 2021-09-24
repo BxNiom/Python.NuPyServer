@@ -1,5 +1,3 @@
-import json
-
 from nupyserver.server import Server
 
 
