@@ -23,7 +23,7 @@ LOG_CONFIG = {
             'level': 'INFO',
             'formatter': 'long',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'nupyserver.log',
+            'filename': '/nupyserver/log/nupyserver.log',
             'maxBytes': 20000,
             'backupCount': 5
         }

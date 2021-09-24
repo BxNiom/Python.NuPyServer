@@ -5,7 +5,7 @@ description = ""
 authors = ["BxNiom <bxniom@protonmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7"
 fastapi = {version = "^0.68.1", extras = ["all"]}
 
 [tool.poetry.dev-dependencies]

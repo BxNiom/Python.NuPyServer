@@ -24,4 +24,4 @@ then
     cmd+=" --ssl-keyfile=$ssl_key --ssl-certfile=$ssl_cert"
 fi
 
-(cd /opt/nupyserver && $cmd)
+$cmd
