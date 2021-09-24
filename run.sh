@@ -17,7 +17,7 @@ host=$(get_config "host")
 port=$(get_config "port")
 ssl_cert=$(get_config "ssl_cert")
 ssl_key=$(get_config "ssl_key")
-cmd="poetry run uvicorn nupyserver.server:app --host $host --port $port"
+cmd="uvicorn nupyserver.server:app --host $host --port $port"
 
 if [ ! -z $ssl_cert ] && [ ! -z $ssl_key ]
 then
