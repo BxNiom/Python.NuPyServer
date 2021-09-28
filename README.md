@@ -20,7 +20,7 @@ sudo docker run --name nupyserver --env NPS_IP=[YOUR DOCKER HOST IP] -p 5000:500
 sudo docker run --name nupyserver --env NPS_IP=[YOUR DOCKER HOST IP] -p 5000:5000 -v /srv/nupyserver:/nupyserver --restart always bxniom/nupyserver:0.2.1-amd
 ```
 
-## Install from GitHub 
+## Build from GitHub 
 
 #### Raspberry PI (ARM)
 ```shell
