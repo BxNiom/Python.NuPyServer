@@ -18,10 +18,7 @@ class AutoCompleteService(BaseService):
 
     def on_auto(self, q: str, skip: int, take: int, prerelease: bool):
         sql = "SELECT DISTINCT pkg_info_id FROM tbl_packages {where}{pre}LIMIT {take} OFFSET {skip}".format(
-            where="" if q is None else "WHERE (pkg_info_id LIKE " +
-                                       "{t} OR pkg_info_description LIKE {t} OR pkg_info_title LIKE {t}) ".format(
-                                           t=f"'{q}%'"
-                                       ),
+            where="" if q == "" else "WHERE (pkg_info_id LIKE {t} OR pkg_info_description LIKE {t} OR pkg_info_title LIKE {t}) ".format(t=f"'{q}%'"),
             pre="" if prerelease else ("AND " if q else "WHERE ") + "pkg_info_version NOT LIKE '%-%' ",
             take=take,
             skip=skip

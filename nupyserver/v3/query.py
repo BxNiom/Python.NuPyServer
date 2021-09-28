@@ -19,7 +19,7 @@ class QueryService(BaseService):
     def _on_query(self, q: str, skip: int, take: int, prerelease: bool):
         sql = "SELECT DISTINCT {cols} FROM tbl_packages {where}{pre}LIMIT {take} OFFSET {skip}".format(
             cols=self._columns,
-            where="" if q is None else "WHERE (pkg_info_id LIKE " +
+            where="" if q == "" else "WHERE (pkg_info_id LIKE " +
                                        "{t} OR pkg_info_description LIKE {t} OR pkg_info_title LIKE {t}) ".format(
                                            t=f"'%{q}%'"
                                        ),
